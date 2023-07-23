@@ -1,6 +1,7 @@
 ﻿using DataAccessLayer.Data;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,14 @@ namespace BusinessLogicLayer
             return await _context.GetTblUserRegistrationsAsync();
         }
 
-        
+        public async Task<IEnumerable<TblUserRegistration>> GetUserById(int userId)
+        {
+            return await _context.GetUserById(userId);
+        }
+
+        public async Task<bool> UserDeleteAsync(int userId)
+        {
+            return await _context.UserDeletedAsync(userId);
+        }
     }
 }

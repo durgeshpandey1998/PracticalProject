@@ -13,5 +13,7 @@ namespace DataAccessLayer.Interfaces
         Task<TblUserRegistration> AddTblUserRegisterationAsync(TblUserRegistration record);
         Task<IEnumerable<TblState>> GetTblStateAsync();
         Task<IEnumerable<TblCity>> GetTblCityAsync(int stateId);
+        Task<IEnumerable<TblUserRegistration>> GetUserById(int userId);
+        Task<bool> UserDeletedAsync(int userId);
     }
 }

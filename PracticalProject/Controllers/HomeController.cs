@@ -37,6 +37,22 @@ namespace PracticalProject.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<bool> DeleUser(int Id)
+        {
+            bool isDeleted = false;
+            if (Id > 0)
+            {
+                await _registerUserService.UserDeleteAsync(Id);
+                isDeleted = true;
+                return isDeleted;
+            }
+            else
+            {
+                return isDeleted;
+            }
+        }
+
         public async Task<IActionResult> DisplayUser()
         {
             var registerUser = await _registerUserService.GetTblUserRegistrationsAsync();
@@ -56,6 +72,12 @@ namespace PracticalProject.Controllers
             return Json(cityData);
          }
 
+        [HttpPost("GetUserById")]
+        public async Task<JsonResult> GetUserById(int userId)
+        {
+            var userData = await _registerUserService.GetUserById(userId);
+            return Json(userData);
+        }
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
