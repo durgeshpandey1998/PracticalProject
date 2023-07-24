@@ -7,7 +7,7 @@
 <h1>DisplayUser</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="RegisterData">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -232,6 +232,7 @@
             success: function (response) {
                 alert("Update Success");
                 $('#exampleModal').modal('hide');
+                location.href = "https://localhost:7197/Home/DisplayUser";
             },
             error: function (request, status, error) {
                 alert(request.responseText);
@@ -262,6 +263,7 @@
                             'Your file has been deleted.',
                             'success'
                         )
+                        location.href = "https://localhost:7197/Home/DisplayUser";
                     },
                     error: function (request, status, error) {
                         Swal.fire(
@@ -276,9 +278,3 @@
         })
                     }
                 </script>
-
-
-
-        <script>
-    
-        </script>

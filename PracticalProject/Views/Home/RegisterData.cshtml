@@ -11,10 +11,10 @@
         <form asp-action="RegisterData">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @*<div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>*@
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" class="form-control" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>*@
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input id="name" asp-for="Name" class="form-control" />
@@ -38,9 +38,11 @@
             <div class="form-group">
                 <label asp-for="StateId" class="control-label"></label>
                 @*<input asp-for="StateId" class="form-control" />*@
-                <select id="satetName"><option value="0">
-                    --Select Country--</option>
-                    </select>
+                <select id="satetName">
+                    <option value="0">
+                        --Select Country--
+                    </option>
+                </select>
                 <span asp-validation-for="StateId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -58,28 +60,26 @@
                 <input type="checkbox" id="iAgree" name='chkBestSeller' value="Agree">
             </div>
             <div class="form-group">
-                <input type="button" onclick="RegisterData()" value="Register" class="btn btn-primary" id="myButton"/>
+                <input type="button" onclick="RegisterData()" value="Register" class="btn btn-primary" id="myButton"  />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="DisplayUser">Back to List</a>
 </div>
 
-@*@section Scripts {
+@section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 
-
-}*@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.19/dist/sweetalert2.all.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.19/dist/sweetalert2.min.css">
 
-@*<script src="c:\users\dell\onedrive\desktop\prroject\practicalproject\practicalproject\wwwroot\lib\jquery\dist\jquery.min.js"></script>*@
-
-<script type="text/javascript">
+<script>
     $(document).ready(function () {
-        debugger;
         document.getElementById('myButton').style.visibility = 'hidden';
         $.ajax({
             type: "GET",
@@ -130,26 +130,28 @@
 
     function RegisterData()
     {
-        var tblUserRegistration={
+        var tblUserRegistration = {
             Name: $("#name").val(),
             Email: $("#email").val(),
-                    Phone: $("#phone").val(),
-                        Address: $("#address").val(),
-                            StateId: $('#satetName').val(),
-                                CityId: $('#cityName').val()
-        }
-    console.log(tblUserRegistration)
-    $.ajax({
-        url: "/Home/RegisterData",
-        type: "POST",
-        data: { tblUserRegistration: tblUserRegistration },
-        success: function (response) {
-            alert(Register Success);
-        },
-        error: function (request, status, error) {
-            alert(request.responseText);
-        }
-    });
+            Phone: $("#phone").val(),
+            Address: $("#address").val(),
+            StateId: $('#satetName').val(),
+            CityId: $('#cityName').val()
+        };
+            $.ajax({
+                    url: "/Home/RegisterData",
+                     type: "POST",
+                    data: { tblUserRegistration: tblUserRegistration },
+                        success: function (response)
+                        {
+                            alert("Register Success");
+                            location.href = "https://localhost:7197/Home/DisplayUser";
+                        },
+                         error: function (request, status, error)
+                             {
+                                 alert(request.responseText);
+                             }
+              });
     }
 
 </script>
