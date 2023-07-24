@@ -141,15 +141,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.19/dist/sweetalert2.all.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.19/dist/sweetalert2.min.css">
-                <script>
+<script>
     $(document).ready(function () {
-        
+
     })
     var stateIds=0;
     var cityIds=0;
     function openModel(id)
     {
-        
+
         $.ajax({
             type: "post",
             url: '@Url.Action("GetUserById", "Home")',
@@ -175,13 +175,19 @@
                         var state = "<select id='satetName'>";
                         state = state + '<option value="">--Select State--</option>';
                         for (var i = 0; i < res.length; i++) {
-                            state = state + '<option value=' + res[i].id + '>' + res[i].stateName + '</option>';
+                            if (stateIds == res[i].id) {
+                                state = state + '<option selected="selected" value=' + res[i].id + '>' + res[i].stateName + '</option>';
+                            }
+                            else {
+                                state = state + '<option value=' + res[i].id + '>' + res[i].stateName + '</option>';
+                            }
                         }
                         state = state + '</select>';
                         $('#satetName').html(state);
                     }
 
                 });
+                LoadCityDropdown(stateIds);
             }
         });
         $('#exampleModal').modal('show');
@@ -195,23 +201,34 @@
     });
 
     $('#satetName').change(function () {
+        var stateid = $('#satetName').val();
+        LoadCityDropdown(stateid);
+    });
+
+
+    function LoadCityDropdown(stateid) {
         $.ajax({
             type: "post",
             url: '@Url.Action("GetAllCity", "Home")',
-            data: { stateId: $('#satetName').val() },
+                            data: { stateId: stateid },
             datatype: "json",
             traditional: true,
             success: function (data) {
                 var district = "<select id='cityName'>";
                 district = district + '<option value="">--Select--</option>';
                 for (var i = 0; i < data.length; i++) {
+                    if (cityIds == data[i].id) {
+                        district = district + '<option selected="selected" value=' + data[i].id + '>' + data[i].cityName + '</option>';
+                    }
+                    else {
                     district = district + '<option value=' + data[i].id + '>' + data[i].cityName + '</option>';
+                    }
                 }
                 district = district + '</select>';
                 $('#cityName').html(district);
             }
         });
-    });
+    }
 
 
     function UpdateUser() {
@@ -240,7 +257,7 @@
         });
     }
 
-                    
+
                     function deleteFunction(id)
                     {
         Swal.fire({
@@ -273,8 +290,8 @@
                         )
                     }
                 });
-                
+
             }
         })
                     }
-                </script>
+</script>
